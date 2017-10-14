@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import SearchResult from './search-result';
 import axios from 'axios';
 const apiKey = '27cb999c93709b76e41d3638da96eb28';
 const baseUrl = 'http://api.openweathermap.org/data/2.5/weather?';
@@ -8,11 +7,8 @@ class Search extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      cityName : '',
-      listData: {},
+      cityName : ''
     };
-    this.handleSearch = this.handleSearch.bind(this);
-    this.handleRequest = this.handleRequest.bind(this);
   }
   
   handleSearch = (event) => {  
@@ -23,15 +19,15 @@ class Search extends React.Component {
       
   handleRequest = () => {
     let requestUrl = baseUrl + 'APPID=' + apiKey;
-    requestUrl += '&q=' + this.state.cityName; 
+    requestUrl += '&q=' + this.state.cityName + '&unit=metric'; 
     axios.get(requestUrl)
       .then(function (response) {
         const temp = response.data.main.temp;
-        const listObj = this.state.listData;
-        listObj[this.state.cityName] = temp;
-      
-        this.setState({
-          listData:listObj
+
+       
+        this.props._getResults({
+          name: this.state.cityName,
+          value: temp
         })
       })
       .catch(function (error) {
@@ -39,9 +35,6 @@ class Search extends React.Component {
       });
   }
 
-  getDataList = () => {
-    return Object.entries(this.state.listData);
-  }
 
    render() {
       return (
@@ -56,9 +49,6 @@ class Search extends React.Component {
 
   
 }
-
-
-
 
 
 
