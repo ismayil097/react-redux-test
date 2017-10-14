@@ -3,7 +3,7 @@ import ListData from './listData';
 
 
 
-class SearchResult extends React.Component {
+class SearchResult extends Component {
   constructor(props) {
     super(props);
   }
